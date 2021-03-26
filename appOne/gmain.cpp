@@ -27,15 +27,9 @@ struct VEC vecPosToPos(const struct VEC& sp, const struct VEC& ep) {
     return tmp;
 }
 float angleBetween2vec(const struct VEC& a, const struct VEC& b) {
-    //引数のベクトルa,bは正規化されてなければいけない
     float cosAngle = a.x * b.x + a.y * b.y;
-    if (cosAngle > 1.0f) { cosAngle = 1.0f; }
-    else if (cosAngle < -1.0f) { cosAngle = -1.0f; }
-    float angle = acos(cosAngle);
-    if (a.x * b.y - a.y * b.x < 0) {
-        angle = -angle;
-    }
-    return angle;
+    float sinAngle = a.x * b.y - a.y * b.x;
+    return atan2(sinAngle, cosAngle);
 }
 
 struct DATA {
@@ -90,7 +84,7 @@ void gmain(){
                 //回転
                 osu.angle += osu.angSpeed;
             }
-            //回転前準備計算--------------------------------------------
+            //向き合う前の計算--------------------------------------------
             if(isTrigger(KEY_SPACE)) {
                 //オス--------------------------------------------
                 //オスからメスへの方向ベクトルb
@@ -128,25 +122,25 @@ void gmain(){
         }
         
         clear(200);
-        //背景表示
+        //背景描画
         rectMode(CORNER);
         image(backImg, 0, 0);
-        //メスと向き合える領域円
+        //メスと向き合える領域円描画
         strokeWeight(0);
         fill(255, 255, 255, 128);
         circle(mesu.pos.x, mesu.pos.y, nearDist*2);
-        //カブトムシ表示
+        //カブトムシ描画
         rectMode(CENTER);
         image(mesuImg, mesu.pos.x, mesu.pos.y, mesu.angle);
         image(osuImg, osu.pos.x, osu.pos.y, osu.angle);
         //左上のオス用ベクトル表示
-        float ox = 100, oy = 100, armag = 90;
+        float ox = 100, oy = 100, scale = 90;
         circle(ox, oy, 200);
         strokeWeight(5);
         stroke(255, 0, 0);
-        arrow(ox, oy, ox + b_.x * armag, oy + b_.y * armag);
+        arrow(ox, oy, ox + b_.x * scale, oy + b_.y * scale);
         a_ = vecFromAngle(osu.angle);
         stroke(0,0,0);
-        arrow(ox, oy, ox+a_.x*armag, oy+a_.y*armag);
+        arrow(ox, oy, ox+a_.x*scale, oy+a_.y*scale);
     }
 }
