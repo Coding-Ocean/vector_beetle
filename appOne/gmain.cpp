@@ -128,26 +128,25 @@ void gmain(){
         }
         
         clear(200);
+        //背景表示
         rectMode(CORNER);
         image(backImg, 0, 0);
-        rectMode(CENTER);
+        //メスと向き合える領域円
         strokeWeight(0);
         fill(255, 255, 255, 128);
         circle(mesu.pos.x, mesu.pos.y, nearDist*2);
+        //カブトムシ表示
+        rectMode(CENTER);
         image(mesuImg, mesu.pos.x, mesu.pos.y, mesu.angle);
         image(osuImg, osu.pos.x, osu.pos.y, osu.angle);
-        
-        
+        //左上のオス用ベクトル表示
         float ox = 100, oy = 100, armag = 90;
         circle(ox, oy, 200);
         strokeWeight(5);
-        stroke(0,0,0);
-        a_ = vecFromAngle(osu.angle);
-        arrow(ox, oy, ox+a_.x*armag, oy+a_.y*armag);
         stroke(255, 0, 0);
-        if ((b_.x != 0 || b_.y != 0)) {
-            arrow(ox, oy, ox + b_.x * armag, oy + b_.y * armag);
-        }
-        
+        arrow(ox, oy, ox + b_.x * armag, oy + b_.y * armag);
+        a_ = vecFromAngle(osu.angle);
+        stroke(0,0,0);
+        arrow(ox, oy, ox+a_.x*armag, oy+a_.y*armag);
     }
 }
