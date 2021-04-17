@@ -23,7 +23,9 @@ void gmain(){
     //メスデータ
     struct BEETLE mesu;
     mesu.pos.x = width / 2;
-    mesu.pos.y = height / 2;
+    mesu.pos.y = height / 2 - 150;
+    mesu.advSpeed = 10;
+    float advAngle = 0;
     //向かい合いに必要なデータ
     float nearDist = 400;
     int numRotation = 30;
@@ -55,6 +57,20 @@ void gmain(){
                 //回転
                 osu.angle += osu.angSpeed;
             }
+            //メスを歩かせる-------------------------------------------
+            //これから進む方向ベクトルb
+            b.x = cos(advAngle);
+            b.y = sin(advAngle)*0.3f;
+            advAngle += 0.02f;
+            //移動
+            mesu.pos.x += b.x * mesu.advSpeed;
+            mesu.pos.y += b.y * mesu.advSpeed;
+            //現在向いている方向ベクトルa
+            a = vecFromAngle(mesu.angle);
+            //なす角に調整値を掛けて回転スピードとする
+            mesu.angSpeed = angleBetween2vec(a, b) * adjustSpeed;
+            //回転
+            mesu.angle += mesu.angSpeed;
             //向き合う前の計算--------------------------------------------
             if(isTrigger(KEY_SPACE)) {
                 //オス--------------------------------------------
@@ -84,10 +100,12 @@ void gmain(){
         }
         else if (state == ROTATING) {
             //向き合わせる------------------------------------------
-            osu.angle += osu.angSpeed;
-            mesu.angle += mesu.angSpeed;
-            rotationCnt++;
-            if (rotationCnt >= numRotation) {
+            if (rotationCnt < numRotation) {
+                osu.angle += osu.angSpeed;
+                mesu.angle += mesu.angSpeed;
+                rotationCnt++;
+            }
+            if (isTrigger(KEY_SPACE)) {
                 state = WALKING;
             }
         }
@@ -104,6 +122,13 @@ void gmain(){
         rectMode(CENTER);
         image(mesuImg, mesu.pos.x, mesu.pos.y, mesu.angle);
         image(osuImg, osu.pos.x, osu.pos.y, osu.angle);
+
+        //for (float angle = 0; angle < 6.28f; angle += 0.01f) {
+        //    float x = cos(angle) * 500 + width / 2;
+        //    float y = sin(angle) * 0.3f * 500 + height / 2;
+        //    strokeWeight(20);
+        //    point(x, y);
+        //}
     }
     ShowCursor(TRUE);
 }

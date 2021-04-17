@@ -4,8 +4,8 @@ float magnitude(const struct VEC& v) {
     return sqrt(v.x * v.x + v.y * v.y);
 }
 struct VEC normalize(const struct VEC& v) {
-    float mag = magnitude(v);
     struct VEC tmp;
+    float mag = magnitude(v);
     if (mag > 0) {
         tmp.x = v.x / mag;
         tmp.y = v.y / mag;
