@@ -152,14 +152,14 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="gmain.cpp" />
-    <ClCompile Include="VEC.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="resource.rc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="gmain.cpp" />
+    <ClCompile Include="VEC.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VEC.h" />

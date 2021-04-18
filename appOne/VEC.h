@@ -1,10 +1,10 @@
 #pragma once
 struct VEC {
-    float x = 0, y = 0;
+    float x = 0;
+    float y = 0;
 };
-float magnitude(const struct VEC& v);
-struct VEC normalize(const struct VEC& v);
-struct VEC vecFromWASDkey();
+
+float magnitude(struct VEC* v);
+struct VEC normalize(struct VEC* v);
 struct VEC vecFromAngle(float angle);
-struct VEC vecPosToPos(const struct VEC& sp, const struct VEC& ep);
-float angleBetween2vec(const struct VEC& a, const struct VEC& b);
+float angleBetweenTwoVecs(struct VEC* a, struct VEC* b);
